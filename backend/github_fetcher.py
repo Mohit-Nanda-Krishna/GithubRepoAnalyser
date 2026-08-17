@@ -1,8 +1,7 @@
-import os
-from dotenv import load_dotenv
 from github import Github, Auth, GithubException
+from config import GITHUB_TOKEN
 
-auth = Auth.Token(os.getenv("GITHUB_TOKEN"))
+auth = Auth.Token(GITHUB_TOKEN)
 g = Github(auth=auth)
 
 
