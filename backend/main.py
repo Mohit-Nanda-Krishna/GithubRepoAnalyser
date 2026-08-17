@@ -13,7 +13,11 @@ class AnalyzeRequest(BaseModel):
 
 @app.post("/analyze")
 async def analyze_repo(request: AnalyzeRequest):
-    data = fetch_repo_data(request.repo_url)
+    try:
+        data = fetch_repo_data(request.repo_url)
+    except ValueError as e:
+        raise HTTPException(status_code=404, detail=str(e))
+    
     docs_result = analyze_documentation(data)
     health_result = analyze_repo_health(data)
     code_result = analyze_code_quality(data)
